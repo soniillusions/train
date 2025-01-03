@@ -2,6 +2,9 @@ class Main
   require 'date'
   require_relative 'railway_station'
   require_relative 'train'
+  require_relative 'instance_counter'
+
+  include InstanceCounter
 
   attr_accessor :stations
   attr_accessor :current_station
@@ -20,7 +23,7 @@ class Main
 
   def show_stations
     puts 'Список всех станций:'
-    self.stations.each_with_index do |station, i|
+    RailwayStation.all.each_with_index do |station, i|
       puts "#{i} - #{station.name}"
     end
   end
@@ -104,6 +107,8 @@ loop do
   puts '13 - Выбрать вагон'
   puts '14 - Указать производителя вагона'
   puts '15 - Показать производителя вагона'
+  puts '16 - Показать список всех станций'
+  puts '17 - Показать поезд по номеру'
 
   print '=> '
   n = gets.to_i
@@ -244,6 +249,18 @@ loop do
       main.where
     else
       main.current_station.current_train.current_car.show_company_name
+      puts ''
+      main.where
+    end
+  when 16
+    RailwayStation.all
+  when 17
+    if main.current_station == nil || main.current_station.current_train == nil
+      puts 'Сначала выберете поезд!'
+      puts ''
+      main.where
+    else
+      main.current_station.find_train
       puts ''
       main.where
     end

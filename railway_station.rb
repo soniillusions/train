@@ -4,16 +4,27 @@ class RailwayStation
   attr_accessor :current_train
 
   @@instances = 0
+  @@stations = []
 
   def initialize(name)
     @@instances += 1
+    @@stations << self
     @name = name
     @trains = []
     @current_train = nil
   end
 
   def self.all
-    self.class.instances
+    puts @@stations
+  end
+
+  def find_train
+    show_trains
+
+    print 'Введите с клавиатуры номер поезда: '
+    n = gets.to_i
+
+    Train.find(n)
   end
 
   def show_trains

@@ -13,7 +13,9 @@ end
 
 class Train
   require_relative 'car'
+  require_relative 'instance_counter'
   include CompanyName
+  include InstanceCounter
 
   attr_accessor :cars
   attr_accessor :type
@@ -22,13 +24,21 @@ class Train
   attr_accessor :current_station
   attr_accessor :current_car
 
+  @@trains = []
+
   def initialize
+    @@trains << self
+    register_instance
     @type = nil
     @cars = []
     @speed = 0
     @route = nil
     @current_station = nil
     @current_car = nil
+  end
+
+  def self.find(n)
+    puts @@trains[n]
   end
 
   def set_car(car)
