@@ -46,21 +46,21 @@ class Train
   end
 
   def choice_car
-    if self.cars.empty?
+    if cars.empty?
       puts 'У поезда нет вагонов'
     else
       puts 'Какой вагон вы хотите выбрать?'
 
-      self.cars.each_with_index do |car, i|
+      cars.each_with_index do |car, i|
         puts "#{i} - #{car}"
       end
 
       n = gets.to_i
 
-      set_car(self.cars[n])
+      set_car(cars[n])
 
       puts ''
-      puts "Теперь вы выбрали вагон: #{self.current_car}"
+      puts "Теперь вы выбрали вагон: #{current_car}"
     end
   end
 
@@ -73,16 +73,16 @@ class Train
   end
 
   def add_car
-    if self.speed == 0
-      self.cars << Car.new
+    if speed == 0
+      cars << Car.new
     else
       false
     end
   end
 
   def remove_car
-    if self.speed == 0
-      self.cars.delete_at(0)
+    if speed == 0
+      cars.delete_at(0)
     else
       false
     end
@@ -104,15 +104,19 @@ class Train
   end
 end
 
-class PassangerTrain < Train
+class PassengerTrain < Train
   def initialize
     super
-    @type = 'passanger'
+    @type = 'passenger'
+  end
+
+  def validate!
+    raise 'Error! Invalid type for PassengerTrain' if type != 'passenger'
   end
 
   def add_car
     if self.speed == 0
-      self.cars << PassangerCar.new
+      self.cars << PassengerCar.new
       puts 'Пассажирский вагон успешно добавлен!'
     else
       false

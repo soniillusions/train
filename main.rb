@@ -15,15 +15,15 @@ class Main
   end
 
   def where
-    puts "текущая станция: #{self.current_station&.name || 'не задана'}"
-    puts "текущий поезд: #{self.current_station&.current_train || 'не найден'}"
-    puts "текущий вагон: #{self.current_station&.current_train&.current_car || 'не найден'}"
+    puts "текущая станция: #{current_station&.name || 'не задана'}"
+    puts "текущий поезд: #{current_station&.current_train || 'не найден'}"
+    puts "текущий вагон: #{current_station&.current_train&.current_car || 'не найден'}"
     puts ''
   end
 
   def show_stations
     puts 'Список всех станций:'
-    RailwayStation.all.each_with_index do |station, i|
+    stations.each_with_index do |station, i|
       puts "#{i} - #{station.name}"
     end
   end
@@ -31,7 +31,7 @@ class Main
   def create_station
     print "Введите имя для станции: "
     name = gets.chomp
-    self.stations << RailwayStation.new(name)
+    stations << RailwayStation.new(name)
 
     puts 'Станция успешно создана!'
   end
@@ -41,20 +41,20 @@ class Main
   end
 
   def choice_station
-    if self.stations.empty?
+    if stations.empty?
       puts 'Нет ни одной станции'
     else
       puts 'На какую станцию вы хотите перейти?'
-      self.stations.each_with_index do |station, i|
+      stations.each_with_index do |station, i|
         puts "#{i} - #{station.name}"
       end
 
       print 'Введите с клавиатуры номер станции: '
       n = gets.to_i
 
-      set_station(self.stations[n])
+      set_station(stations[n])
 
-      puts "Теперь вы на станции: #{self.current_station.name}"
+      puts "Теперь вы на станции: #{current_station.name}"
     end
   end
 
@@ -67,21 +67,21 @@ class Main
 
     if type == 1
       train = CargoTrain.new
-      self.current_station.trains << train
+      current_station.trains << train
     else
-      train = PassangerTrain.new
-      self.current_station.trains << train
+      train = PassengerTrain.new
+      current_station.trains << train
     end
   end
 
   def send_train
     puts 'Куда вы хотите отправить текущий поезд?'
-    self.show_stations
+    show_stations
 
     print 'Введите с клавиатуры номер станции: '
     n = gets.to_i
 
-    self.stations[n].trains << self.current_station.trains.delete(self.current_station.current_train)
+    stations[n].trains << current_station.trains.delete(current_station.current_train)
   end
 end
 

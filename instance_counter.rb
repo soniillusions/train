@@ -12,13 +12,17 @@ module InstanceCounter
     def instances
       @@instance_counter
     end
+
+    def increment_instance_counter
+      @@instance_counter += 1
+    end
   end
 
   protected
 
   module InstanceMethods
     def register_instance
-      self.class.instance_counter += 1
+      self.class.increment_instance_counter
     end
   end
 end

@@ -13,8 +13,8 @@ class CargoCar < Car
   end
 end
 
-class PassangerCar < Car
+class PassengerCar < Car
   def initialize
-    @type = 'passanger'
+    @type = 'passenger'
   end
 end

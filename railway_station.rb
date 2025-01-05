@@ -29,7 +29,7 @@ class RailwayStation
 
   def show_trains
     puts 'Список всех поездов станции:'
-    self.trains.each_with_index do |train, i|
+    trains.each_with_index do |train, i|
       puts "#{i} - #{train.type}"
     end
   end
