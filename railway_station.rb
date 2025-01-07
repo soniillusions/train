@@ -1,4 +1,6 @@
 class RailwayStation
+  require_relative 'train'
+
   attr_reader :name
   attr_accessor :trains
   attr_accessor :current_train
@@ -56,6 +58,43 @@ class RailwayStation
       puts ''
       puts "Теперь вы даете команды поезду: #{self.current_train.type}"
     end
+  end
+
+  def create_train
+    puts 'Какого класса поезд вы хотите создать?'
+    puts '1 - грузовой'
+    puts '2 - пассажирский'
+    print 'Введите с клавиатуры (1 или 2): '
+    type = gets.to_i
+
+    if type == 1
+      print 'Введите номер поезда (aaa-00): '
+      number = gets.to_s
+
+      train = CargoTrain.new(number)
+      if train.valid? == false
+        puts 'Номер поезда невалиден!'
+        return
+      end
+
+      trains << train
+    elsif type == 2
+      print 'Введите номер поезда (aaa-00): '
+      number = gets.to_s
+
+      train = PassengerTrain.new(number)
+      if train.valid? == false
+        puts 'Номер поезда невалиден!'
+        return
+      end
+
+      trains << train
+    else
+      raise 'Некорректный ввод! укажите 1 или 2'
+    end
+
+  rescue Exception => e
+    puts e.message
   end
 
   def add_train(train)
