@@ -23,10 +23,13 @@ class Train
   attr_accessor :route
   attr_accessor :current_station
   attr_accessor :current_car
+  attr_accessor :number
+
+  NUMBER_FORMAT = /\b[a-z0-9]{3}-?[a-z0-9]{2}\b/i
 
   @@trains = []
 
-  def initialize
+  def initialize(number)
     @@trains << self
     register_instance
     @type = nil
@@ -35,6 +38,7 @@ class Train
     @route = nil
     @current_station = nil
     @current_car = nil
+    @number = number
   end
 
   def self.find(n)
@@ -73,25 +77,31 @@ class Train
   end
 
   def add_car
-    if speed == 0
-      cars << Car.new
-    else
-      false
-    end
+    raise 'Нельзя добавлять вагон на ходу!' unless speed.zero?
+
+    car = create_car
+
+    raise "Тип вагона #{car.type} не совпадает с типом поезда #{type}" if car.type != type
+
+    cars << car
+    puts "#{car.class} успешно добавлен"
   end
 
   def remove_car
-    if speed == 0
-      cars.delete_at(0)
-    else
-      false
-    end
+    raise 'Сначала выберете вагон!' if current_car == nil
+
+    cars.delete(current_car)
+    puts "#{current_car.class} успешно удален!"
+    self.current_car = nil
+
+  rescue RuntimeError => e
+    puts e.message
   end
 
   def show
-    puts "id поезда в памяти: #{self.object_id}"
-    puts "тип поезда: #{self.type}"
-    puts "кол-во вагонов: #{self.cars.size}"
+    puts "id поезда в памяти: #{object_id}"
+    puts "тип поезда: #{type}"
+    puts "кол-во вагонов: #{cars.size}"
     puts ''
   end
 
@@ -105,47 +115,50 @@ class Train
 end
 
 class PassengerTrain < Train
-  def initialize
+  def initialize(number)
     super
     @type = 'passenger'
   end
 
   def validate!
-    raise 'Error! Invalid type for PassengerTrain' if type != 'passenger'
+    raise 'Ошибка! Неправильный тип для PassengerTrain' if type != 'passenger'
+    raise 'Train number has invalid format!' if number !~ NUMBER_FORMAT
   end
 
-  def add_car
-    if self.speed == 0
-      self.cars << PassengerCar.new
-      puts 'Пассажирский вагон успешно добавлен!'
-    else
-      false
-    end
+  def valid?
+    validate!
+  rescue
+    false
   end
 
-  def remove_car
-    super
-    puts 'Пассажирский вагон успешно удален!'
+  private
+
+  def create_car
+    PassengerCar.new
   end
 end
 
 class CargoTrain < Train
-  def initialize
+  def initialize(number)
     super
     @type = 'cargo'
+    validate!
   end
 
-  def add_car
-    if self.speed == 0
-      self.cars << CargoCar.new
-      puts 'Грузовой вагон успешно добавлен!'
-    else
-      false
-    end
+  def validate!
+    raise 'Ошибка! Неправильный тип для CargoTrain!' if type != 'cargo'
+    raise 'Number has invalid format' if number !~ NUMBER_FORMAT
   end
 
-  def remove_car
-    super
-    puts 'Грузовой вагон успешно удален!'
+  def valid?
+    validate!
+  rescue
+    false
+  end
+
+  private
+
+  def create_car
+    CargoCar.new
   end
 end

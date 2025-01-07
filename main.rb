@@ -66,12 +66,25 @@ class Main
     type = gets.to_i
 
     if type == 1
-      train = CargoTrain.new
+      print 'Введите номер поезда (aaa-00): '
+      number = gets.to_s
+
+      train = CargoTrain.new(number)
+      train.valid?
+      current_station.trains << train
+    elsif type == 2
+      print 'Введите номер поезда (aaa-00): '
+      number = gets.to_s
+
+      train = PassengerTrain.new(number)
+      train.valid?
       current_station.trains << train
     else
-      train = PassengerTrain.new
-      current_station.trains << train
+      raise 'Некорректный ввод! укажите 1 или 2'
     end
+
+  rescue RuntimeError => e
+    puts e.message
   end
 
   def send_train
@@ -96,8 +109,8 @@ loop do
   puts '2 - Выбрать станцию'
   puts '3 - Создать поезд'
   puts '4 - Выбрать поезд'
-  puts '5 - Добавить вагоны к поезду'
-  puts '6 - Отцепить вагоны от поезда'
+  puts '5 - Добавить вагон к поезду'
+  puts '6 - Отцепить вагон от поезда'
   puts '7 - Показать информацию о поезде'
   puts '8 - Поместить поезд на станцию'
   puts '9 - Показать список всех станций'
