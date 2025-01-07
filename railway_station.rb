@@ -41,22 +41,22 @@ class RailwayStation
   end
 
   def choice_train
-    if self.trains.size == 0
+    if trains.size == 0
       puts 'На станции нет поездов'
     else
       puts 'Какой поезд вы хотите выбрать?'
 
-      self.trains.each_with_index do |train, i|
+      trains.each_with_index do |train, i|
         puts "#{i} - #{train.type}"
       end
 
       print 'Введите с клавиатуры номер поезда: '
       n = gets.to_i
 
-      self.current_train = self.trains[n]
+      self.current_train = trains[n]
 
       puts ''
-      puts "Теперь вы даете команды поезду: #{self.current_train.type}"
+      puts "Теперь вы даете команды поезду: #{current_train.type}"
     end
   end
 
@@ -98,12 +98,12 @@ class RailwayStation
   end
 
   def add_train(train)
-    self.trains << train
+    trains << train
     train.current_station = self
   end
 
   def remove_train(train)
-    self.trains.delete(train)
+    trains.delete(train)
   end
 end
 
