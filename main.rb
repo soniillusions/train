@@ -2,22 +2,28 @@ class Main
   require 'date'
   require_relative 'railway_station'
   require_relative 'train'
+  require_relative 'route'
   require_relative 'instance_counter'
 
   include InstanceCounter
 
   attr_accessor :stations
+  attr_accessor :routes
   attr_accessor :current_station
+  attr_accessor :current_route
 
   def initialize
     @stations = []
+    @routes = []
     @current_station = nil
+    @current_route = nil
   end
 
   def where
     puts "текущая станция: #{current_station&.name || 'не задана'}"
     puts "текущий поезд: #{current_station&.current_train || 'не найден'}"
     puts "текущий вагон: #{current_station&.current_train&.current_car || 'не найден'}"
+    puts "текущий маршрут: #{current_route&.name || 'не найден'}"
     puts ''
   end
 
@@ -36,8 +42,50 @@ class Main
     puts 'Станция успешно создана!'
   end
 
+  def create_route
+    print 'Введите имя для нового маршрута: '
+    name = gets.chomp
+
+    route = Route.new(name)
+    routes << route
+    set_route(route)
+  end
+
+  def add_station
+    stations.each_with_index do |station, i|
+      puts "#{i} - #{station.name}"
+    end
+
+    print 'Введите номер станции: '
+    input = gets.to_i
+
+    if current_route.stations.include?(stations[input]) || stations[input].nil?
+      puts 'Error'
+    else
+      current_route.stations << stations[input]
+    end
+  end
+
   def set_station(station)
-    @current_station = station
+    self.current_station = station
+  end
+
+  def set_route(route)
+    self.current_route = route
+  end
+
+  def choice_route
+    if current_route.nil?
+      puts 'Нет ни одного маршрута'
+    else
+      routes.each_with_index do |route, i|
+        puts "#{i} - #{route.name}"
+      end
+
+      print 'Введите номер станции: '
+      input = gets.to_i
+      self.current_route = routes[input]
+    end
   end
 
   def choice_station
@@ -93,6 +141,10 @@ loop do
   puts '15 - Показать производителя вагона'
   puts '16 - Показать список всех станций'
   puts '17 - Показать поезд по номеру'
+  puts '18 - Добавить на выбранный маршрут станцию'
+  puts '19 - Удалить станцию из маршрута'
+  puts '20 - Показать список всех станций на выбранном маршруте'
+  puts '21 - Создать маршрут'
 
   print '=> '
   n = gets.to_i
@@ -248,6 +300,40 @@ loop do
       puts ''
       main.where
     end
+  when 18
+    if main.current_route == nil
+      puts 'Сначала выберете маршрут!'
+      puts ''
+      main.where
+    else
+      main.add_station
+      puts ''
+      main.where
+    end
+  when 19
+    if main.current_route == nil
+      puts 'Сначала выберете маршрут!'
+      puts ''
+      main.where
+    else
+      main.current_route.remove_station
+      puts ''
+      main.where
+    end
+  when 20
+    if main.current_route == nil
+      puts 'Сначала выберете маршрут!'
+      puts ''
+      main.where
+    else
+      main.current_route.show
+      puts ''
+      main.where
+    end
+  when 21
+    main.create_route
+    puts ''
+    main.where
   else
     puts 'Такого варианта овтета нет! Введите 0 для выхода'
     puts ''

@@ -67,7 +67,8 @@ class RailwayStation
     print 'Введите с клавиатуры (1 или 2): '
     type = gets.to_i
 
-    if type == 1
+    case type
+    when 1
       print 'Введите номер поезда (aaa-00): '
       number = gets.to_s
 
@@ -78,7 +79,7 @@ class RailwayStation
       end
 
       trains << train
-    elsif type == 2
+    when 2
       print 'Введите номер поезда (aaa-00): '
       number = gets.to_s
 
