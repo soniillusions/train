@@ -51,7 +51,7 @@ class Main
     set_route(route)
   end
 
-  def add_station
+  def add_station_to_route
     stations.each_with_index do |station, i|
       puts "#{i} - #{station.name}"
     end
@@ -62,7 +62,7 @@ class Main
     if current_route.stations.include?(stations[input]) || stations[input].nil?
       puts 'Error'
     else
-      current_route.stations << stations[input]
+      current_route.add_station(stations[input])
     end
   end
 
@@ -306,7 +306,7 @@ loop do
       puts ''
       main.where
     else
-      main.add_station
+      main.add_station_to_route
       puts ''
       main.where
     end

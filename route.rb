@@ -23,6 +23,17 @@ class Route
     end
   end
 
+  def add_station(station)
+    if station.is_a?(RailwayStation)
+      stations << station
+    else
+      raise ArgumentError, 'Object must be an instance of RailwayStation class'
+    end
+
+  rescue ArgumentError => e
+    puts e.message
+  end
+
   def remove_station
     show
     print 'Введите номер станции: '
