@@ -123,6 +123,7 @@ class PassengerTrain < Train
   def validate!
     raise 'Ошибка! Неправильный тип для PassengerTrain' if type != 'passenger'
     raise 'Train number has invalid format!' if number !~ NUMBER_FORMAT
+    raise "Train with number #{number} is already exist!" if @@trains.any? {|train| train.number == number}
   end
 
   def valid?

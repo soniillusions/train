@@ -73,22 +73,14 @@ class RailwayStation
       number = gets.to_s
 
       train = CargoTrain.new(number)
-      if train.valid? == false
-        puts 'Номер поезда невалиден!'
-        return
-      end
-
+      train.validate!
       trains << train
     when 2
       print 'Введите номер поезда (aaa-00): '
       number = gets.to_s
 
       train = PassengerTrain.new(number)
-      if train.valid? == false
-        puts 'Номер поезда невалиден!'
-        return
-      end
-
+      train.validate!
       trains << train
     else
       raise 'Некорректный ввод! укажите 1 или 2'
