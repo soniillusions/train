@@ -114,6 +114,8 @@ class Main
     n = gets.to_i
 
     stations[n].trains << current_station.trains.delete(current_station.current_train)
+    current_station.current_train.current_car = nil
+    current_station.current_train = nil
   end
 end
 

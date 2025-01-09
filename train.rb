@@ -30,7 +30,6 @@ class Train
   @@trains = []
 
   def initialize(number)
-    @@trains << self
     register_instance
     @type = nil
     @cars = []
@@ -118,6 +117,8 @@ class PassengerTrain < Train
   def initialize(number)
     super
     @type = 'passenger'
+    validate!
+    @@trains << self
   end
 
   def validate!
@@ -144,6 +145,7 @@ class CargoTrain < Train
     super
     @type = 'cargo'
     validate!
+    @@trains << self
   end
 
   def validate!

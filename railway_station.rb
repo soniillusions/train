@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 class RailwayStation
   require_relative 'train'
 
   attr_reader :name
-  attr_accessor :trains
-  attr_accessor :current_train
+  attr_accessor :trains, :current_train
 
   @@instances = 0
   @@stations = []
@@ -36,12 +37,12 @@ class RailwayStation
     end
   end
 
-  def set_train(train)
+  def train=(train)
     self.current_train = train
   end
 
   def choice_train
-    if trains.size == 0
+    if trains.empty?
       puts 'На станции нет поездов'
     else
       puts 'Какой поезд вы хотите выбрать?'
@@ -53,7 +54,7 @@ class RailwayStation
       print 'Введите с клавиатуры номер поезда: '
       n = gets.to_i
 
-      self.current_train = trains[n]
+      self.train = trains[n]
 
       puts ''
       puts "Теперь вы даете команды поезду: #{current_train.type}"
@@ -73,20 +74,17 @@ class RailwayStation
       number = gets.to_s
 
       train = CargoTrain.new(number)
-      train.validate!
       trains << train
     when 2
       print 'Введите номер поезда (aaa-00): '
       number = gets.to_s
 
       train = PassengerTrain.new(number)
-      train.validate!
       trains << train
     else
       raise 'Некорректный ввод! укажите 1 или 2'
     end
-
-  rescue Exception => e
+  rescue StandardError => e
     puts e.message
   end
 
@@ -97,6 +95,12 @@ class RailwayStation
 
   def remove_train(train)
     trains.delete(train)
+  end
+
+  def each_train(&block)
+    trains.each do |train|
+      block.call(train) if block
+    end
   end
 end
 
