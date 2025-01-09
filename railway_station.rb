@@ -99,12 +99,7 @@ class RailwayStation
 
   def each_train(&block)
     trains.each do |train|
-      block.call(train) if block
+      block&.call(train)
     end
   end
 end
-
-
-
-
-

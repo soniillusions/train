@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# этот модуль позволяет считать количество экземпляров класса
 module InstanceCounter
   def self.included(base)
     base.extend ClassMethods
@@ -18,14 +21,9 @@ module InstanceCounter
     end
   end
 
-  protected
-
   module InstanceMethods
     def register_instance
       self.class.increment_instance_counter
     end
   end
 end
-
-
-

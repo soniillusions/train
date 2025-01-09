@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
+# этот класс описывает Маршрут
 class Route
-  attr_accessor :name
-  attr_accessor :first_station
-  attr_accessor :last_station
-  attr_accessor :stations
+  require_relative 'helper_methods'
+
+  include HelperMethods
+
+  attr_accessor :name, :stations
 
   def initialize(name)
     @name = name
@@ -17,25 +21,16 @@ class Route
     stations.last
   end
 
-  def show
-    stations.each_with_index do |station, i|
-      puts "#{i} - #{station.name}"
-    end
-  end
-
   def add_station(station)
-    if station.is_a?(RailwayStation)
-      stations << station
-    else
-      raise ArgumentError, 'Object must be an instance of RailwayStation class'
-    end
+    raise ArgumentError, 'Object must be an instance of RailwayStation class' unless station.is_a?(RailwayStation)
 
+    stations << station
   rescue ArgumentError => e
     puts e.message
   end
 
   def remove_station
-    show
+    each_show(stations)
     print 'Введите номер станции: '
     input = gets.to_i
     stations.delete_at(input)

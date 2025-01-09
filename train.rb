@@ -1,29 +1,30 @@
+# frozen_string_literal: true
+
+# модуль CompanyName прозволяет указывать и получать название компании-производителя
 module CompanyName
   attr_accessor :company_name
 
-  def set_name(name)
+  def name=(name)
     @company_name = name
   end
 
   def show_company_name
-    puts self.company_name.capitalize
+    puts company_name.capitalize
   end
 end
 
-
+# класс Train предоставляет поезд
+# содержит информацию о типе, вагонах, скорости, маршруте, текущей станции, текущем вагоне и номере поезда
 class Train
   require_relative 'car'
   require_relative 'instance_counter'
+  require_relative 'helper_methods'
+
   include CompanyName
   include InstanceCounter
+  include HelperMethods
 
-  attr_accessor :cars
-  attr_accessor :type
-  attr_accessor :speed
-  attr_accessor :route
-  attr_accessor :current_station
-  attr_accessor :current_car
-  attr_accessor :number
+  attr_accessor :cars, :type, :speed, :route, :current_station, :current_car, :number
 
   NUMBER_FORMAT = /\b[a-z0-9]{3}-?[a-z0-9]{2}\b/i
 
@@ -40,11 +41,11 @@ class Train
     @number = number
   end
 
-  def self.find(n)
-    puts @@trains[n]
+  def self.find(index)
+    puts @@trains[index]
   end
 
-  def set_car(car)
+  def car=(car)
     self.current_car = car
   end
 
@@ -53,15 +54,10 @@ class Train
       puts 'У поезда нет вагонов'
     else
       puts 'Какой вагон вы хотите выбрать?'
-
-      cars.each_with_index do |car, i|
-        puts "#{i} - #{car}"
-      end
+      each_show(cars)
 
       n = gets.to_i
-
-      set_car(cars[n])
-
+      self.car = cars[n]
       puts ''
       puts "Теперь вы выбрали вагон: #{current_car}"
     end
@@ -87,12 +83,11 @@ class Train
   end
 
   def remove_car
-    raise 'Сначала выберете вагон!' if current_car == nil
+    raise 'Сначала выберете вагон!' if current_car.nil?
 
     cars.delete(current_car)
     puts "#{current_car.class} успешно удален!"
     self.current_car = nil
-
   rescue RuntimeError => e
     puts e.message
   end
@@ -113,6 +108,7 @@ class Train
   end
 end
 
+# этот класс предоставляет Пассажирский поезд
 class PassengerTrain < Train
   def initialize(number)
     super
@@ -124,12 +120,12 @@ class PassengerTrain < Train
   def validate!
     raise 'Ошибка! Неправильный тип для PassengerTrain' if type != 'passenger'
     raise 'Train number has invalid format!' if number !~ NUMBER_FORMAT
-    raise "Train with number #{number} is already exist!" if @@trains.any? {|train| train.number == number}
+    raise "Train with number #{number} is already exist!" if @@trains.any? { |train| train.number == number }
   end
 
   def valid?
     validate!
-  rescue
+  rescue RuntimeError
     false
   end
 
@@ -140,6 +136,7 @@ class PassengerTrain < Train
   end
 end
 
+# этот класс предоставляет Грузовой поезд
 class CargoTrain < Train
   def initialize(number)
     super
@@ -155,7 +152,7 @@ class CargoTrain < Train
 
   def valid?
     validate!
-  rescue
+  rescue RuntimeError
     false
   end
 
