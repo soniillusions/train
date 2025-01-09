@@ -2,6 +2,8 @@
 
 class RailwayStation
   require_relative 'train'
+  require_relative 'passenger_train'
+  require_relative 'cargo_train'
 
   attr_reader :name
   attr_accessor :trains, :current_train

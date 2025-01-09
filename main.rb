@@ -135,6 +135,7 @@ main = Main.new
 
 puts 'Вас приветствует программа по управлению поездами!'
 puts "Сегодня #{Date.today.strftime('%d %B %Y')}"
+puts ''
 
 loop do
   puts 'Что на этот раз? :D'
