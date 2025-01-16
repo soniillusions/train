@@ -1,36 +1,36 @@
+# frozen_string_literal: true
+
 class Menu
   require 'tty-prompt'
 
-  attr_accessor :main
-  attr_accessor :prompt
-  attr_accessor :choices
+  attr_accessor :main, :prompt, :choices
 
   def initialize(main)
     @main = main
     @prompt = TTY::Prompt.new
     @choices = [
-      {name: 'Выйти', value: 0},
-      {name: 'Создать станцию', value: 1},
-      {name: 'Выбрать станцию', value: 2},
-      {name: 'Создать поезд', value: 3},
-      {name: 'Выбрать поезд', value: 4},
-      {name: 'Добавить вагон к поезду', value: 5},
-      {name: 'Отцепить вагон от поезда', value: 6},
-      {name: 'Показать информацию о поезде', value: 7},
-      {name: 'Поместить поезд на станцию', value: 8},
-      {name: 'Показать список всех станций', value: 9},
-      {name: 'Показать список поездов на текущей станции', value: 10},
-      {name: 'Указать производителя поезда', value: 11},
-      {name: 'Показать производителя поезда', value: 12},
-      {name: 'Выбрать вагон', value: 13},
-      {name: 'Указать производителя вагона', value: 14},
-      {name: 'Показать производителя вагона', value: 15},
-      {name: 'Показать список всех станций', value: 16}, # Дублируется
-      {name: 'Показать поезд по номеру', value: 17},
-      {name: 'Добавить на выбранный маршрут станцию', value: 18},
-      {name: 'Удалить станцию из маршрута', value: 19},
-      {name: 'Показать список всех станций на выбранном маршруте', value: 20},
-      {name: 'Создать маршрут', value: 21}
+      { name: 'Выйти', value: 0 },
+      { name: 'Создать станцию', value: 1 },
+      { name: 'Выбрать станцию', value: 2 },
+      { name: 'Создать поезд', value: 3 },
+      { name: 'Выбрать поезд', value: 4 },
+      { name: 'Добавить вагон к поезду', value: 5 },
+      { name: 'Отцепить вагон от поезда', value: 6 },
+      { name: 'Показать информацию о поезде', value: 7 },
+      { name: 'Поместить поезд на станцию', value: 8 },
+      { name: 'Показать список всех станций', value: 9 },
+      { name: 'Показать список поездов на текущей станции', value: 10 },
+      { name: 'Указать производителя поезда', value: 11 },
+      { name: 'Показать производителя поезда', value: 12 },
+      { name: 'Выбрать вагон', value: 13 },
+      { name: 'Указать производителя вагона', value: 14 },
+      { name: 'Показать производителя вагона', value: 15 },
+      { name: 'Показать список всех станций', value: 16 }, # Дублируется
+      { name: 'Показать поезд по номеру', value: 17 },
+      { name: 'Добавить на выбранный маршрут станцию', value: 18 },
+      { name: 'Удалить станцию из маршрута', value: 19 },
+      { name: 'Показать список всех станций на выбранном маршруте', value: 20 },
+      { name: 'Создать маршрут', value: 21 }
     ]
   end
 
@@ -47,7 +47,7 @@ class Menu
     when 4 then validate_station { main.current_station.choice_train }
     when 5 then validate_train { main.current_station.current_train.add_car }
     when 6 then validate_train { main.current_station.current_train.remove_car }
-    when 7 then validate_train { main.current_station.current_train.show}
+    when 7 then validate_train { main.current_station.current_train.show }
     when 8 then validate_train { main.send_train }
     when 9 then validate_stations { main.show_stations }
     when 10 then validate_station { main.current_station.show_trains }
@@ -68,7 +68,7 @@ class Menu
   end
 
   def show
-    user_input = prompt.select("Что на этот раз? :D", choices, per_page: 21)
+    user_input = prompt.select('Что на этот раз? :D', choices, per_page: 21)
     run_action(user_input)
   end
 
@@ -136,4 +136,3 @@ class Menu
     end
   end
 end
-
