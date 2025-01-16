@@ -9,6 +9,7 @@ class Menu
     @main = main
     @prompt = TTY::Prompt.new
     @choices = [
+      {name: 'Выйти', value: 0},
       {name: 'Создать станцию', value: 1},
       {name: 'Выбрать станцию', value: 2},
       {name: 'Создать поезд', value: 3},
