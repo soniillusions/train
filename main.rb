@@ -8,6 +8,7 @@ class Main
   require_relative 'route'
   require_relative 'instance_counter'
   require_relative 'helper_methods'
+  require_relative 'menu'
 
   include InstanceCounter
   include HelperMethods
@@ -132,162 +133,10 @@ class Main
 end
 
 main = Main.new
-
-puts 'Вас приветствует программа по управлению поездами!'
-puts "Сегодня #{Date.today.strftime('%d %B %Y')}"
-puts ''
+menu = Menu.new(main)
 
 loop do
-  puts 'Что на этот раз? :D'
-  puts '1 - Создать станцию'
-  puts '2 - Выбрать станцию'
-  puts '3 - Создать поезд'
-  puts '4 - Выбрать поезд'
-  puts '5 - Добавить вагон к поезду'
-  puts '6 - Отцепить вагон от поезда'
-  puts '7 - Показать информацию о поезде'
-  puts '8 - Поместить поезд на станцию'
-  puts '9 - Показать список всех станций'
-  puts '10 - Показать список поездов на текущей станции'
-  puts '11 - Указать производителя поезда'
-  puts '12 - Показать производителя поезда'
-  puts '13 - Выбрать вагон'
-  puts '14 - Указать производителя вагона'
-  puts '15 - Показать производителя вагона'
-  puts '16 - Показать список всех станций'
-  puts '17 - Показать поезд по номеру'
-  puts '18 - Добавить на выбранный маршрут станцию'
-  puts '19 - Удалить станцию из маршрута'
-  puts '20 - Показать список всех станций на выбранном маршруте'
-  puts '21 - Создать маршрут'
-
-  print '=> '
-  n = gets.to_i
-
-  puts ''
-
-  case n
-  when 0
-    break
-  when 1
-    main.create_station
-  when 2
-    main.choice_station
-  when 3
-    if main.current_station.nil?
-      puts 'Сначала выберете станцию!'
-    else
-      main.current_station.create_train
-    end
-  when 4
-    if main.current_station.nil?
-      puts 'Сначала выберете станцию!'
-    else
-      main.current_station.choice_train
-    end
-  when 5
-    if main.current_station.nil? || main.current_station.current_train.nil?
-      puts 'Сначала выберете поезд!'
-    else
-      main.current_station.current_train.add_car
-    end
-  when 6
-    if main.current_station.nil? || main.current_station.current_train.nil?
-      puts 'Сначала выберете поезд!'
-    else
-      main.current_station.current_train.remove_car
-    end
-  when 7
-    if main.current_station.nil? || main.current_station.current_train.nil?
-      puts 'Сначала выберете поезд!'
-    else
-      main.current_station.current_train.show
-    end
-  when 8
-    if main.current_station.nil? || main.current_station.current_train.nil?
-      puts 'Сначала выберете поезд!'
-    else
-      main.send_train
-    end
-  when 9
-    if main.current_station.nil?
-      puts 'Нет ни одной станции!'
-    else
-      main.show_stations
-    end
-  when 10
-    if main.current_station.nil?
-      puts 'Сначала выберете станцию!'
-    else
-      main.current_station.show_trains
-    end
-  when 11
-    if main.current_station.nil? || main.current_station.current_train.nil?
-      puts 'Сначала выберете поезд!'
-    else
-      print 'Введите название компании для поезда: '
-      name = gets.chomp
-      main.current_station.current_train.name = name
-    end
-  when 12
-    if main.current_station.nil? || main.current_station.current_train.nil?
-      puts 'Сначала выберете поезд!'
-    else
-      main.current_station.current_train.show_company_name
-    end
-  when 13
-    if main.current_station.current_train.nil?
-      puts 'Сначала выберете поезд!'
-    else
-      main.current_station.current_train.choice_car
-    end
-  when 14
-    if main.current_station.current_train.current_car.nil?
-      puts 'Сначала выберете вагон!'
-    else
-      puts 'Введите название компании для вагона: '
-      name = gets.chomp
-      main.current_station.current_train.current_car.name = name
-    end
-  when 15
-    if main.current_station.current_train.current_car.nil?
-      puts 'Сначала выберете вагон!'
-    elsif main.current_station.current_train.current_car.company_name.nil?
-      puts 'У вагона не установлено название компании'
-    else
-      main.current_station.current_train.current_car.show_company_name
-    end
-  when 16
-    RailwayStation.all
-  when 17
-    if main.current_station.nil? || main.current_station.current_train.nil?
-      puts 'Сначала выберете поезд!'
-    else
-      main.current_station.find_train
-    end
-  when 18
-    if main.current_route.nil?
-      puts 'Сначала выберете маршрут!'
-    else
-      main.add_station_to_route
-    end
-  when 19
-    if main.current_route.nil?
-      puts 'Сначала выберете маршрут!'
-    else
-      main.current_route.remove_station
-    end
-  when 20
-    if main.current_route.nil?
-      puts 'Сначала выберете маршрут!'
-    else
-      main.current_route.show
-    end
-  when 21
-    main.create_route
-  else
-    puts 'Такого варианта овтета нет! Введите 0 для выхода'
-  end
+  menu.show
 
   puts ''
   main.where

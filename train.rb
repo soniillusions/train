@@ -106,4 +106,10 @@ class Train
   def next_station(next_station)
     self.current_station = next_station
   end
+
+  def each_car(&block)
+    cars.each do |car|
+      block.call(car)
+    end
+  end
 end
