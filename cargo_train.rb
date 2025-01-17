@@ -1,4 +1,5 @@
-# этот класс предоставляет Грузовой поезд
+# frozen_string_literal: true
+
 class CargoTrain < Train
   def initialize(number)
     super

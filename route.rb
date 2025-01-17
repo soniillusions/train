@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# этот класс описывает Маршрут
 class Route
   require_relative 'helper_methods'
 

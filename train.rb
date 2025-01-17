@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# модуль CompanyName прозволяет указывать и получать название компании-производителя
 module CompanyName
   attr_accessor :company_name
 
@@ -13,8 +12,6 @@ module CompanyName
   end
 end
 
-# класс Train предоставляет поезд
-# содержит информацию о типе, вагонах, скорости, маршруте, текущей станции, текущем вагоне и номере поезда
 class Train
   require_relative 'car'
   require_relative 'instance_counter'

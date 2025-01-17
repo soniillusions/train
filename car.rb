@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# этот класс описывает Вагон
 class Car
   include CompanyName
   attr_reader :type
@@ -10,7 +9,6 @@ class Car
   end
 end
 
-# этот класс описывает Грузовой вагон
 class CargoCar < Car
   def initialize
     super
@@ -18,7 +16,6 @@ class CargoCar < Car
   end
 end
 
-# этот класс описывает Пассажирский вагон
 class PassengerCar < Car
   def initialize
     super

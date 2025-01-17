@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# это главный класс который управляет программой
 class Main
   require 'date'
   require_relative 'railway_station'
