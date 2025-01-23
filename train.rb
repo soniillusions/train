@@ -1,19 +1,8 @@
 # frozen_string_literal: true
 
-module CompanyName
-  attr_accessor :company_name
-
-  def name=(name)
-    @company_name = name
-  end
-
-  def show_company_name
-    puts company_name.capitalize
-  end
-end
-
 class Train
   require_relative 'car'
+  require_relative 'company_name'
   require_relative 'instance_counter'
   require_relative 'helper_methods'
   require_relative 'validation'

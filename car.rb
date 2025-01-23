@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Car
+  require_relative 'company_name'
   include CompanyName
   attr_reader :type
 
