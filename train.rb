@@ -16,10 +16,12 @@ class Train
   require_relative 'car'
   require_relative 'instance_counter'
   require_relative 'helper_methods'
+  require_relative 'validation'
 
   include CompanyName
   include InstanceCounter
   include HelperMethods
+  include Validation
 
   attr_accessor :cars, :type, :speed, :route, :current_station, :current_car, :number
 
@@ -36,6 +38,7 @@ class Train
     @current_station = nil
     @current_car = nil
     @number = number
+    @@trains << self
   end
 
   def self.find(index)

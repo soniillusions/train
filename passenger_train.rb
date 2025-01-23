@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
 class PassengerTrain < Train
+  validate :type, :presence
+  validate :number, :format, NUMBER_FORMAT
+
   def initialize(number)
-    super
+    super(number)
     @type = 'passenger'
     validate!
-    @@trains << self
   end
 
   def validate!
+    super
     raise 'Ошибка! Неправильный тип для PassengerTrain' if type != 'passenger'
-    raise 'Train number has invalid format!' if number !~ NUMBER_FORMAT
     raise "Train with number #{number} is already exist!" if @@trains.any? { |train| train.number == number }
   end
 
