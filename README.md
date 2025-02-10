@@ -11,6 +11,11 @@ This is a console-based Train Management Application where I practiced Object-Or
 - Metaprogramming techniques to dynamically define methods and enhance flexibility.
 - Interactive terminal menu using `tty-prompt`.
 
+The application allows users to:
+- Create and manage trains, routes, and stations.
+- Assign routes to trains and control train movement.
+- View and modify train details through an interactive menu.
+
 ## Installation
 
 Ensure you have Ruby installed. Then, install the required gems manually if needed:
@@ -27,10 +32,5 @@ To start the application, run:
 ruby main.rb
 ```
 
-## Usage
 
-The application allows users to:
-- Create and manage trains, routes, and stations.
-- Assign routes to trains and control train movement.
-- View and modify train details through an interactive menu.
 
