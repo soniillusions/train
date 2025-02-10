@@ -1,4 +1,4 @@
-# Train Management Application
+# Train Management Ruby Program
 
 ## Description
 
