@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a console-based Train Management Application where I practiced Object-Oriented Programming (OOP) principles, exception handling, and metaprogramming. The application also utilizes the `tty-prompt` library to provide a more user-friendly menu interface in the terminal.
+This is a console-based Train Management Application where I practiced Object-Oriented Programming (OOP) principles, exception handling, and metaprogramming.
 
 ## Features
 
