@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require_relative '../train'
+require_relative '../cargo_train'
+require_relative '../passenger_train'
 
 RSpec.describe Train do
   describe 'base Train class' do
@@ -81,6 +83,8 @@ RSpec.describe Train do
 
   describe 'Train methods' do
     let(:train) { Train.new('123-45') }
+    let(:cargo_train) { CargoTrain.new('123-55') }
+    let(:passenger_train) { PassengerTrain.new('123-65') }
     let(:cargo_car) { CargoCar.new }
     let(:passenger_car) { PassengerCar.new }
 
@@ -103,7 +107,12 @@ RSpec.describe Train do
         train.accelerate(10)
         expect { train.add_car }.to raise_error(RuntimeError, 'Нельзя добавлять вагон на ходу!')
       end
+
+      it 'raises error when adding car with another type' do
+        allow(cargo_train).to receive(:create_car).and_return(double(type: 'passenger'))
+
+        expect { cargo_train.add_car }.to raise_error('Тип вагона passenger не совпадает с типом поезда cargo')
+      end
     end
   end
 end
-
