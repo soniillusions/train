@@ -40,7 +40,7 @@ class Menu
 
   def run_action(user_input)
     case user_input
-    when 0 then brake
+    when 0 then exit
     when 1 then main.create_station
     when 2 then main.choice_station
     when 3 then validate_station { main.current_station.create_train }
